@@ -1,3 +1,7 @@
+using MyProfile.Application.Interface;
+using MyProfile.Application.Services;
+using MyProfile.Infrastructure.Extention.Email;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,7 +10,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// === Dependency Injection ===
+// Application layer
+builder.Services.AddScoped<ISendMail, SendMail>();
 
+// Infrastructure layer
+builder.Services.AddScoped<IEmailServices, SmtpEmailSender>();
+
+// ============================
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
