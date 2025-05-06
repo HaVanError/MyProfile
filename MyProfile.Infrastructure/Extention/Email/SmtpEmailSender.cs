@@ -47,7 +47,10 @@ namespace MyProfile.Infrastructure.Extention.Email
                 }
 
                 message.Body = builder.ToMessageBody();
-
+                message.ReplyTo.Add(MailboxAddress.Parse(request.SenderEmail)); 
+                // do gmail sẽ chặn các email ko đúng chuẩn nên phải sử dụng 1 email server
+                // từ đó lấy replay_to để biết email nào gửi còn email server (namchibi18)
+                // sẽ chịu trách nhiệm gửi email cho email chủ sỡ hữu (nếu face gmail thì gg sẽ cho nó vào spam )
                 // Gửi email qua SMTP
                 using var client = new SmtpClient();
                 await client.ConnectAsync(_smtpServer, 587, SecureSocketOptions.StartTls);
