@@ -19,15 +19,17 @@ namespace MyProfile.Application.Services
 
         public async Task SendMailAsysn(ContactRequest request)
         {
-            byte[] fileBytes = null;
-            if (request.File != null)
-            {
-                using (var ms = new MemoryStream())
-                {
-                    await request.File.CopyToAsync(ms);
-                    fileBytes = ms.ToArray();
-                }
-            }
+          
+            byte[] fileBytes = request.FileContent;
+            //if (request.File != null)
+            //{
+            //    using (var ms = new MemoryStream())
+            //    {
+            //        //await request.File.CopyToAsync(ms);
+            //    //   await request.File.FileContent.CopyTo(ms);
+            //        fileBytes = ms.ToArray();
+            //    }
+            //}
 
             // Tạo request gửi email
             var emailRequest = new EmailFile
@@ -36,8 +38,8 @@ namespace MyProfile.Application.Services
                 Subject = request.Subject,
                 Message = request.Message,
                 FileContent = fileBytes,
-                FileName = request.File?.FileName,
-                ContentType = request.File?.ContentType
+              //  FileName = request.File?.FileName,
+                ContentType = request.ContentType
             };
 
             // Gọi tầng Infrastructure để gửi email
