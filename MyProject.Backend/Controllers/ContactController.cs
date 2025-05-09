@@ -18,7 +18,7 @@ namespace MyProject.Backend.Controllers
         [HttpPost]
         public async Task<IActionResult> SendEmail([FromForm] ContactRequest request)
         {
-            if (request.File != null && request.File.ContentType != "application/pdf")
+            if (request.FileContent != null && request.ContentType != "application/pdf")
             {
                 return BadRequest("File phải là PDF.");
             }
